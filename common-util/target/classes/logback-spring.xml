@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- configuration file for LogBack (slf4J implementation)
+See here for more details: http://gordondickens.com/wordpress/2013/03/27/sawing-through-the-java-loggers/ -->
+<configuration debug="true">
+	<!-- To enable JMX Management -->
+	<jmxConfigurator/>
+
+	<springProperty scope="context" name="logService" source="log.service"/>
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%X{sessionId} %date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+		</layout>
+	</appender>
+
+	<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/anduin.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>logs/anduin.log.%d{yyyy-MM-dd}.log</fileNamePattern>
+
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>7</maxHistory>
+			<totalSizeCap>1GB</totalSizeCap>
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>%X{sessionId} %date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="error-file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/anduin.error.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>logs/anduin.error.log.%d{yyyy-MM-dd}.log</fileNamePattern>
+
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>%X{sessionId} %date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+		</encoder>
+
+		<filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印错误日志 -->
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<appender name="debug-file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/anduin.debug.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>logs/anduin.debug.log.%d{yyyy-MM-dd}.log</fileNamePattern>
+
+			<!-- keep 30 days' worth of history -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>%X{sessionId} %date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+		</encoder>
+
+		<filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印错误日志 -->
+			<level>DEBUG</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<appender name="logstash-business" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>info</level>
+		</filter>
+		<file>logs/logstash-business.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.MultipleTimeBasedRollingPolicy">
+			<fileNamePattern>logs/logstash-business.log.%d{yyyy-MM-dd}</fileNamePattern>
+			<maxHistory>1</maxHistory>
+			<totalSizeCap>1GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder class="net.logstash.logback.encoder.LogstashEncoder">
+			<customFields>{"project": "o2o", "type": "${logService}"}</customFields>
+			<includeCallerData>true</includeCallerData>
+			<version>1</version>
+			<!--<jsonGeneratorDecorator class="com.alpha.tools.monitor.customizing.PrettyPrintingDecorator"/>-->
+			<!--<jsonFactoryDecorator class="com.alpha.tools.monitor.customizing.JSONDecorator"/>-->
+		</encoder>
+	</appender>
+
+	<!-- 异步输出 -->
+	<appender name ="async-logstash-business" class= "ch.qos.logback.classic.AsyncAppender">
+		<!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+		<discardingThreshold >0</discardingThreshold>
+		<!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+		<!--<queueSize>65536</queueSize>-->
+		<queueSize>2048</queueSize>
+		<!-- 添加附加的appender,最多只能添加一个 -->
+		<appender-ref ref ="logstash-business"/>
+		<!-- add the following line -->
+		<includeCallerData>true</includeCallerData>
+	</appender>
+
+
+	<root level="info">
+		<appender-ref ref="console"/>
+		<appender-ref ref="file"/>
+		<appender-ref ref="async-logstash-business"/>
+	</root>
+</configuration>
