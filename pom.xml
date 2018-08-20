@@ -13,6 +13,7 @@
         <module>common-util</module>
         <module>anduin-web</module>
         <module>common-web</module>
+        <module>anduin-business</module>
     </modules>
 
     <properties>

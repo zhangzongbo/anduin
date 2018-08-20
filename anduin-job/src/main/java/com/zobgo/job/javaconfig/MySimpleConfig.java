@@ -7,6 +7,7 @@ import com.dangdang.ddframe.job.lite.api.listener.ElasticJobListener;
 import com.dangdang.ddframe.job.lite.config.LiteJobConfiguration;
 import com.dangdang.ddframe.job.lite.spring.api.SpringJobScheduler;
 import com.dangdang.ddframe.job.reg.zookeeper.ZookeeperRegistryCenter;
+import com.zobgo.job.listener.MyElasticJobListener;
 import com.zobgo.job.simple.MySimpleJob;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -41,7 +42,8 @@ public class MySimpleConfig {
 
     @Bean(initMethod = "init")
     public JobScheduler mySimpleJobScheduler(final MySimpleJob mySimpleJob){
-        return new SpringJobScheduler(mySimpleJob,registryCenter, liteJobConfiguration(),new ElasticJobListener[0]);
+        MyElasticJobListener elasticJobListener = new MyElasticJobListener();
+        return new SpringJobScheduler(mySimpleJob,registryCenter, liteJobConfiguration(), elasticJobListener);
     }
 
     public LiteJobConfiguration liteJobConfiguration(){
