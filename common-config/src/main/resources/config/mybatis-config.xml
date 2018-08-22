@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+    <!--<typeAliases>-->
+        <!--<typeAlias type="com.cafintech.common.mybatis.handler.CustomIntEnumTypeHandler" alias="IntEnumHandler"/>-->
+    <!--</typeAliases>-->
+
+    <!--<typeHandlers>-->
+        <!--<typeHandler handler="IntEnumHandler"-->
+                     <!--javaType="com.cafintech.business.backstage.user.enums.BackstageUserStatusEnum"/>-->
+    <!--</typeHandlers>-->
+</configuration>

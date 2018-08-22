@@ -14,6 +14,8 @@
         <module>anduin-web</module>
         <module>common-web</module>
         <module>anduin-business</module>
+        <module>common-mybatis</module>
+        <module>common-config</module>
     </modules>
 
     <properties>

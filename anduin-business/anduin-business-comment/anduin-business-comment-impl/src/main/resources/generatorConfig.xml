@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<!-- 配置Run As Maven build : Goals 参数 : mybatis-generator:generate -Dmybatis.generator.overwrite=true -->
+<!-- 配置 tableName,使用 Run As Maven build 生成 dao domain 层 -->
+<generatorConfiguration>
+    <!-- 配置文件路径 -->
+    <!--<properties url="${mybatis.generator.generatorConfig.properties}"/>-->
+
+    <!--数据库驱动包路径 -->
+    <classPathEntry location="/home/xyl/.m2/repository/mysql/mysql-connector-java/5.1.18/mysql-connector-java-5.1.18.jar"/>
+
+
+    <!--
+    context:生成一组对象的环境
+    id:必选，上下文id，用于在生成错误时提示
+    defaultModelType:指定生成对象的样式
+        1，conditional：类似hierarchical；
+        2，flat：所有内容（主键，blob）等全部生成在一个对象中；
+        3，hierarchical：主键生成一个XXKey对象(key class)，Blob等单独生成一个对象，其他简单属性在一个对象中(record class)
+    targetRuntime:
+        1，MyBatis3：默认的值，生成基于MyBatis3.x以上版本的内容，包括XXXBySample；
+        2，MyBatis3Simple：类似MyBatis3，只是不生成XXXBySample；
+    introspectedColumnImpl：类全限定名，用于扩展MBG
+    -->
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!--关闭注释 -->
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+            <!-- 自动识别数据库关键字，默认false，如果设置为true，根据SqlReservedWords中定义的关键字列表；
+            一般保留默认值，遇到数据库关键字（Java关键字），使用columnOverride覆盖
+         -->
+            <property name="autoDelimitKeywords" value="false"/>
+            <!-- 生成的Java文件的编码 -->
+            <property name="javaFileEncoding" value="UTF-8"/>
+            <!-- 格式化java代码 -->
+            <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+            <!-- 格式化XML代码 -->
+            <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+
+            <!-- beginningDelimiter和endingDelimiter：指明数据库的用于标记数据库对象名的符号，比如ORACLE就是双引号，MYSQL默认是`反引号； -->
+            <property name="beginningDelimiter" value="`"/>
+            <property name="endingDelimiter" value="`"/>
+        </commentGenerator>
+
+        <!--数据库连接信息 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/NCMComment"
+                        userId="root"
+                        password="123456">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!--生成的model 包路径 -->
+        <javaModelGenerator targetPackage="com.zobgo.business.comment.model" targetProject="src/main/java">
+            <property name="enableSubPackages" value="ture"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!--生成xml mapper文件 路径 -->
+        <sqlMapGenerator targetPackage="resources.config.mappers" targetProject="src/main/">
+            <property name="enableSubPackages" value="ture"/>
+        </sqlMapGenerator>
+
+        <!-- 生成的Dao接口 的包路径 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.zobgo.business.comment.dao"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="ture"/>
+        </javaClientGenerator>
+
+
+        <!--<table tableName="ca_certification" domainObjectName="Certification" enableCountByExample="false"-->
+        <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+        <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <table tableName="comment" domainObjectName="Comment" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+
+        <!--<table tableName="ca_marketing_cash" domainObjectName="MarketingCash" enableCountByExample="false"-->
+               <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <!--<table tableName="ca_marketing_cash_info" domainObjectName="MarketingCashInfo" enableCountByExample="false"-->
+               <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <!--<table tableName="ca_channel_area" domainObjectName="ChannelArea" enableCountByExample="false"-->
+        <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+        <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <!--<table tableName="ca_backstage_user" domainObjectName="BackstageUser" enableCountByExample="false"-->
+        <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+        <!--selectByExampleQueryId="false">-->
+        <!--<columnOverride column="status">-->
+        <!--<property name="property" value="status"/>-->
+        <!--<property name="javaType" value="BackstageUserStatusEnum"/>-->
+        <!--<property name="jdbcType" value="INTEGER" />-->
+        <!--<property name="typeHandler" value="com.cafintech.common.mybatis.handler.CustomIntEnumTypeHandler" />-->
+        <!--</columnOverride>-->
+        <!--</table>-->
+
+        <!--<table tableName="ca_roles" domainObjectName="Role" enableCountByExample="false"-->
+        <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+        <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <!--<table tableName="ca_permissions" domainObjectName="Permission" enableCountByExample="false"-->
+        <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+        <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <!--<table tableName="ca_role_permission" domainObjectName="RolePermission" enableCountByExample="false"-->
+        <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+        <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <!--<table tableName="ca_backstage_user_role" domainObjectName="BackstageUserRole" enableCountByExample="false"-->
+        <!--enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
+        <!--selectByExampleQueryId="false">-->
+        <!--</table>-->
+    </context>
+</generatorConfiguration>

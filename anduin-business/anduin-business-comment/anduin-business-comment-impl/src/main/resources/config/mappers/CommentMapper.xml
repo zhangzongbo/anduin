@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zobgo.business.comment.dao.CommentMapper" >
+  <resultMap id="BaseResultMap" type="com.zobgo.business.comment.model.Comment" >
+    <id column="comment_id" property="commentId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="like_count" property="likeCount" jdbcType="INTEGER" />
+    <result column="song_id" property="songId" jdbcType="BIGINT" />
+    <result column="song_name" property="songName" jdbcType="VARCHAR" />
+    <result column="artist_id" property="artistId" jdbcType="BIGINT" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="comment_status" property="commentStatus" jdbcType="TINYINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.zobgo.business.comment.model.Comment" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    comment_id, user_id, user_name, like_count, song_id, song_name, artist_id, time, 
+    comment_status
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from comment
+    where comment_id = #{commentId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from comment
+    where comment_id = #{commentId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zobgo.business.comment.model.Comment" >
+    insert into comment (comment_id, user_id, user_name, 
+      like_count, song_id, song_name, 
+      artist_id, time, comment_status, 
+      content)
+    values (#{commentId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, 
+      #{likeCount,jdbcType=INTEGER}, #{songId,jdbcType=BIGINT}, #{songName,jdbcType=VARCHAR}, 
+      #{artistId,jdbcType=BIGINT}, #{time,jdbcType=TIMESTAMP}, #{commentStatus,jdbcType=TINYINT}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zobgo.business.comment.model.Comment" >
+    insert into comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="commentId != null" >
+        comment_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="likeCount != null" >
+        like_count,
+      </if>
+      <if test="songId != null" >
+        song_id,
+      </if>
+      <if test="songName != null" >
+        song_name,
+      </if>
+      <if test="artistId != null" >
+        artist_id,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="commentStatus != null" >
+        comment_status,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="commentId != null" >
+        #{commentId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="likeCount != null" >
+        #{likeCount,jdbcType=INTEGER},
+      </if>
+      <if test="songId != null" >
+        #{songId,jdbcType=BIGINT},
+      </if>
+      <if test="songName != null" >
+        #{songName,jdbcType=VARCHAR},
+      </if>
+      <if test="artistId != null" >
+        #{artistId,jdbcType=BIGINT},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentStatus != null" >
+        #{commentStatus,jdbcType=TINYINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zobgo.business.comment.model.Comment" >
+    update comment
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="likeCount != null" >
+        like_count = #{likeCount,jdbcType=INTEGER},
+      </if>
+      <if test="songId != null" >
+        song_id = #{songId,jdbcType=BIGINT},
+      </if>
+      <if test="songName != null" >
+        song_name = #{songName,jdbcType=VARCHAR},
+      </if>
+      <if test="artistId != null" >
+        artist_id = #{artistId,jdbcType=BIGINT},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commentStatus != null" >
+        comment_status = #{commentStatus,jdbcType=TINYINT},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where comment_id = #{commentId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zobgo.business.comment.model.Comment" >
+    update comment
+    set user_id = #{userId,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      like_count = #{likeCount,jdbcType=INTEGER},
+      song_id = #{songId,jdbcType=BIGINT},
+      song_name = #{songName,jdbcType=VARCHAR},
+      artist_id = #{artistId,jdbcType=BIGINT},
+      time = #{time,jdbcType=TIMESTAMP},
+      comment_status = #{commentStatus,jdbcType=TINYINT},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where comment_id = #{commentId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zobgo.business.comment.model.Comment" >
+    update comment
+    set user_id = #{userId,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      like_count = #{likeCount,jdbcType=INTEGER},
+      song_id = #{songId,jdbcType=BIGINT},
+      song_name = #{songName,jdbcType=VARCHAR},
+      artist_id = #{artistId,jdbcType=BIGINT},
+      time = #{time,jdbcType=TIMESTAMP},
+      comment_status = #{commentStatus,jdbcType=TINYINT}
+    where comment_id = #{commentId,jdbcType=BIGINT}
+  </update>
+</mapper>
