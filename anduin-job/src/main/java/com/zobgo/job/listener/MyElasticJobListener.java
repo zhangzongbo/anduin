@@ -1,10 +1,8 @@
 package com.zobgo.job.listener;
 
 import com.dangdang.ddframe.job.executor.ShardingContexts;
-import com.dangdang.ddframe.job.lite.api.listener.AbstractDistributeOnceElasticJobListener;
 import com.dangdang.ddframe.job.lite.api.listener.ElasticJobListener;
-
-import java.text.SimpleDateFormat;
+import com.zogbo.common.utils.TimeUtil;
 import java.util.Date;
 
 import lombok.extern.slf4j.Slf4j;
@@ -18,24 +16,24 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MyElasticJobListener implements ElasticJobListener{
 
+    private long beginTime = 0;
+
+
     @Override
     public void beforeJobExecuted(ShardingContexts shardingContexts) {
-        log.info("===> JOB BEGIN: {} <===",date2Str(new Date()));
+        beginTime = System.currentTimeMillis();
+        log.info("===> JOB BEGIN TIME: {} <===",TimeUtil.mill2Time(beginTime));
     }
 
     @Override
     public void afterJobExecuted(ShardingContexts shardingContexts) {
-        log.info("===> JOB END: {} <===",date2Str(new Date()));
+        long endTime = System.currentTimeMillis();
+        log.info("===> JOB END TIME: {},TOTAL CAST: {} <===",TimeUtil.mill2Time(endTime), endTime - beginTime);
     }
 
-    private String date2Str(Date date){
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(date);
-    }
 
     public static void main(String[] args) {
-        MyElasticJobListener listener = new MyElasticJobListener();
-        System.out.println(listener.date2Str(new Date()));
+
+        System.out.println(TimeUtil.date2Str(new Date()));
     }
 }

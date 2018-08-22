@@ -1,6 +1,5 @@
 package com.zobgo.business.comment.dao;
 
-import com.github.pagehelper.SqlUtil;
 import com.zobgo.common.mybatis.util.SqlUtils;
 
 import org.apache.ibatis.jdbc.SQL;
@@ -20,10 +19,9 @@ public class CommentProvider {
         Byte status = (Byte) params.get("status");
 
         List<Long> CommentIds = (List<Long>) params.get("commentIds");
-        String sql = new SQL().UPDATE("comment")
+
+        return new SQL().UPDATE("comment")
                 .SET("comment_status = '" + status + "'")
                 .WHERE("comment_id in" + SqlUtils.in(CommentIds)).toString();
-        log.info("sql: {}" ,sql);
-        return sql;
     }
 }
