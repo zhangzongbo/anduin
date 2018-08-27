@@ -6,8 +6,8 @@ import com.dangdang.ddframe.job.lite.api.JobScheduler;
 import com.dangdang.ddframe.job.lite.config.LiteJobConfiguration;
 import com.dangdang.ddframe.job.lite.spring.api.SpringJobScheduler;
 import com.dangdang.ddframe.job.reg.zookeeper.ZookeeperRegistryCenter;
+import com.zobgo.job.demo.DemoJob;
 import com.zobgo.job.listener.MyElasticJobListener;
-import com.zobgo.job.simple.MySimpleJob;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -16,40 +16,39 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.Resource;
 
 /**
- * Created by zongbo.zhang on 8/16/18.
+ * Created by zongbo.zhang on 8/23/18.
  */
 
 @Configuration
-public class MySimpleConfig {
-
+public class DemoConfig {
     @Resource
     private ZookeeperRegistryCenter registryCenter;
 
-    @Value("${simpleJob.mySimpleJob.name}")
-    private String mySimpleJobName;
+    @Value("${demo.demoJob.name}")
+    private String demoJobName;
 
-    @Value("${simpleJob.mySimpleJob.cron}")
-    private String mySimpleJobCron;
+    @Value("${demo.demoJob.cron}")
+    private String demoJobCron;
 
-    @Value("${simpleJob.mySimpleJob.shardingTotalCount}")
-    private int mySimpleJobShardingTotalCount;
+    @Value("${demo.demoJob.shardingTotalCount}")
+    private int demoJobShardingTotalCount;
 
     @Bean
-    public MySimpleJob mySimpleJob(){
-        return new MySimpleJob();
+    public DemoJob demoJob(){
+        return new DemoJob();
     }
 
     @Bean(initMethod = "init")
-    public JobScheduler mySimpleJobScheduler(final MySimpleJob mySimpleJob){
+    public JobScheduler demoJobScheduler(final DemoJob demoJob){
         MyElasticJobListener elasticJobListener = new MyElasticJobListener();
-        return new SpringJobScheduler(mySimpleJob,registryCenter, liteJobConfiguration(), elasticJobListener);
+        return new SpringJobScheduler(demoJob,registryCenter,liteJobConfiguration(),elasticJobListener);
     }
 
     private LiteJobConfiguration liteJobConfiguration(){
-        //定义Lite作业根配置
-        return LiteJobConfiguration.newBuilder(new SimpleJobConfiguration(
-                JobCoreConfiguration.newBuilder(mySimpleJobName,mySimpleJobCron,mySimpleJobShardingTotalCount).build(),
-                MySimpleJob.class.getCanonicalName()
-        )).overwrite(true).build();
+        return LiteJobConfiguration.newBuilder(
+                new SimpleJobConfiguration(
+                        JobCoreConfiguration.newBuilder(demoJobName,demoJobCron,demoJobShardingTotalCount).build() ,DemoJob.class.getCanonicalName()
+                )).overwrite(true).build();
     }
+
 }

@@ -22,18 +22,18 @@ public class MyElasticJobListener implements ElasticJobListener{
     @Override
     public void beforeJobExecuted(ShardingContexts shardingContexts) {
         beginTime = System.currentTimeMillis();
-        log.info("===> JOB BEGIN TIME: {} <===",TimeUtil.mill2Time(beginTime));
+
+        log.info("===>{} JOB BEGIN TIME: {} <===",shardingContexts.getJobName(), TimeUtil.mill2Time(beginTime));
     }
 
     @Override
     public void afterJobExecuted(ShardingContexts shardingContexts) {
         long endTime = System.currentTimeMillis();
-        log.info("===> JOB END TIME: {},TOTAL CAST: {} <===",TimeUtil.mill2Time(endTime), endTime - beginTime);
+        log.info("===>{} JOB END TIME: {},TOTAL CAST: {} <===",shardingContexts.getJobName(), TimeUtil.mill2Time(endTime), endTime - beginTime);
     }
 
 
     public static void main(String[] args) {
-
-        System.out.println(TimeUtil.date2Str(new Date()));
+        System.out.println(TimeUtil.mill2Time(System.currentTimeMillis()));
     }
 }
