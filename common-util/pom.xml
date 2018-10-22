@@ -24,6 +24,7 @@
         <commons-io.version>2.5</commons-io.version>
         <commons-lang3.version>3.2.1</commons-lang3.version>
         <configuration.version>1.10</configuration.version>
+        <spring-core-version>[4.3.17,)</spring-core-version>
     </properties>
 
     <dependencies>
@@ -157,12 +158,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>RELEASE</version>
+            <version>${spring-core-version}</version>
         </dependency>
 
         <dependency>
