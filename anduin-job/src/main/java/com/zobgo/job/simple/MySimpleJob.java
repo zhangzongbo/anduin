@@ -4,6 +4,8 @@ import com.zobgo.business.comment.model.Comment;
 import com.zobgo.business.comment.service.api.CommentService;
 import com.dangdang.ddframe.job.api.ShardingContext;
 import com.dangdang.ddframe.job.api.simple.SimpleJob;
+import com.zobgo.job.aop.LogInfo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -24,6 +26,7 @@ public class MySimpleJob implements SimpleJob {
     CommentService commentService;
 
     @Override
+    @LogInfo
     public void execute(ShardingContext shardingContext) {
         List<Comment> comments = commentService.getCommentByStatus(0);
         log.info("待更新条数： {}",comments.size());
