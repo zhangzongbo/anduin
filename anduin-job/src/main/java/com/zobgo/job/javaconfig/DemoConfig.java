@@ -9,6 +9,7 @@ import com.dangdang.ddframe.job.reg.zookeeper.ZookeeperRegistryCenter;
 import com.zobgo.job.demo.DemoJob;
 import com.zobgo.job.listener.MyElasticJobListener;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,10 +34,13 @@ public class DemoConfig {
     @Value("${demo.demoJob.shardingTotalCount}")
     private int demoJobShardingTotalCount;
 
-    @Bean
-    public DemoJob demoJob(){
-        return new DemoJob();
-    }
+//    @Bean
+//    public DemoJob demoJob(){
+//        return new DemoJob();
+//    }
+
+    @Autowired
+    private DemoJob demoJob;
 
     @Bean(initMethod = "init")
     public JobScheduler demoJobScheduler(final DemoJob demoJob){

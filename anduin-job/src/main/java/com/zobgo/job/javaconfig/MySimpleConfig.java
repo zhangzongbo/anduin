@@ -9,6 +9,7 @@ import com.dangdang.ddframe.job.reg.zookeeper.ZookeeperRegistryCenter;
 import com.zobgo.job.listener.MyElasticJobListener;
 import com.zobgo.job.simple.MySimpleJob;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,10 +35,12 @@ public class MySimpleConfig {
     @Value("${simpleJob.mySimpleJob.shardingTotalCount}")
     private int mySimpleJobShardingTotalCount;
 
-    @Bean
-    public MySimpleJob mySimpleJob(){
-        return new MySimpleJob();
-    }
+//    @Bean
+//    public MySimpleJob mySimpleJob(){
+//        return new MySimpleJob();
+//    }
+    @Autowired
+    private MySimpleJob mySimpleJob;
 
     @Bean(initMethod = "init")
     public JobScheduler mySimpleJobScheduler(final MySimpleJob mySimpleJob){

@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication
 @Slf4j
-@ComponentScan(basePackages = {"com.zobgo"})
 public class AnduinJobApplication {
     public static void main(String[] args) {
         SpringApplication.run(AnduinJobApplication.class,args);
