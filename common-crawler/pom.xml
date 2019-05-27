@@ -12,7 +12,7 @@
     <artifactId>common-crawler</artifactId>
 
     <properties>
-        <json.version>1.1.37</json.version>
+        <json.version>(1.2.31,)</json.version>
         <httpclient.version>4.5.2</httpclient.version>
         <gson.version>2.7</gson.version>
         <guava.version>19.0</guava.version>

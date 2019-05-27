@@ -18,9 +18,9 @@ bin/
 hs_err_pid*
 
 # 忽略所有配置，生产环境配置由jenkins统一管理
-*.conf
-**/application-prod.properties
-**/application-dev.properties
-**/application-test.properties
-**/application.properties
+# *.conf
+# **/application-prod.properties
+# **/application-dev.properties
+# **/application-test.properties
+# **/application.properties
 **/.DS_Store
