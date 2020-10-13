@@ -37,7 +37,7 @@
         <lasted.release.version>2.0.3.1</lasted.release.version>
         <quartz.version>2.2.1</quartz.version>
         <curator.version>2.10.0</curator.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <aws.java.sdk.version>1.11.36</aws.java.sdk.version>
         <mongo.driver.version>3.6.2</mongo.driver.version>
         <morphia.version>1.3.2</morphia.version>
