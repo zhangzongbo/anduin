@@ -91,6 +91,9 @@ public class StreamReadableFilter extends OncePerRequestFilter {
         final String requestBody = requestWrapper.getBody().length()> BODY_LIMIT_LENGTH ? BODY_LIMIT_LENGTH_STR : requestWrapper.getBody();
         final String responseCode = String.valueOf(responseWrapper.getStatus());
         String responseBody = null;
+        if (url.contains("favicon.ico")){
+            return;
+        }
         try {
             responseBody = new String(responseWrapper.getCopy(), responseWrapper.getCharacterEncoding());
         } catch (UnsupportedEncodingException e) {

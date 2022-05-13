@@ -58,7 +58,7 @@ public class HttpUtils {
             ip = request.getRemoteAddr();
         }
 
-        logger.info("ip is " + ip);
+//        logger.info("ip is " + ip);
         return ip;
     }
 
